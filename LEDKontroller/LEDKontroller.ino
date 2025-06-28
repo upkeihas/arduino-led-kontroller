@@ -11,7 +11,7 @@
 // uncomment to enable debug messages
 // # define DEBUG
 
-const String VERSION = "1.0";
+const String VERSION = "1.1";
 
 const int remoteIn = 2;  // Remote signal digital in pin
 const int rLed = 9;  // PWM pin the red LED is attached to
@@ -19,7 +19,7 @@ const int gLed = 10;  // PWM pin the green LED is attached to
 const int bLed = 11;  // PWM pin the blue LED is attached to
 const int ledPins[] = {rLed, gLed, bLed};  // store leds in array for easy access
 
-const int fastPollMillis = 100;   // Fast poll rate millisconds
+const int fastPollMillis = 100;   // Fast poll rate millis
 unsigned long lastOn = 0;   // Remote signal lastOn timestamp in millis
 unsigned long lastOff = 0;  // Remote signal lastOff timestamp in millis
 volatile bool remoteState = false;  // remote signal toggle state
@@ -67,13 +67,13 @@ bool switchOn() {
     if (millisSinceLastOff() <= millisSinceLastOn()) {
       // signal used to be off, update timestamp
       lastOn = millis();
-      debug("UP: " + String(lastOn));
+      debug("HIGH: " + String(lastOn));
     }
   }
-  else if (millisSinceLastOn() <= millisSinceLastOff()) {
+  else if (millisSinceLastOn() < millisSinceLastOff()) {
     // signal used to be on, update timestamp
     lastOff = millis();
-    debug("DOWN: " + String(lastOff));
+    debug("LOW: " + String(lastOff));
   }
   return remoteState;
 }
